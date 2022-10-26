@@ -1,5 +1,5 @@
 <h1> # SUPER JOGO DA VELHA </h1>
-Esse projeto consiste num site que contém um jogo da velha para ser jogado por 2 jogadores, mas que é um pouco diferente do jogo da velha comum. Resumidamente é um jogo da velha grande que é composto por jogos da velha menores ocorrendo simultâneamente. 
+Esse projeto consiste num site que contém um jogo da velha para ser jogado por 2 jogadores, mas que é um pouco diferente do jogo da velha comum. Resumidamente: é um jogo da velha grande que é composto por jogos da velha menores ocorrendo simultâneamente. 
 <br>
 <h2> Descrição do Jogo </h2>
 <p> O jogo é semelhante ao jogo da velha habitual. Para jogar são necessários 2 jogadores, cada um com um símbolo (O e X). </p>
