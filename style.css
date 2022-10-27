@@ -1,7 +1,18 @@
 .title {
   text-align: center;
 }
-
+button {
+  box-sizing: border-box;
+  padding: 5px 5px;
+  font-size: 1.34rem;
+  border: none;
+  width: 35px;
+  height: 35px;
+  background-color: transparent;
+}
+button:disabled {
+  color: black;
+}
 .jogo-todo {
   width: 40%;
   text-align: center;
@@ -39,13 +50,20 @@
 .space9 {
   grid-area: space9;
 }
-.space {
+.space1,
+.space2,
+.space3,
+.space4,
+.space5,
+.space6,
+.space7,
+.space8,
+.space9 {
   max-height: 80%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 20px;
+  padding: 35px;
   margin: 1px;
-  font-size: 30px;
   text-align: center;
   border: 4px solid rgba(0, 0, 0, 0.8);
   grid-template-areas:
@@ -54,7 +72,7 @@
     "minispace7 minispace8 minispace9";
 }
 .minispace {
-  padding: 4px;
+  font-size: 25px;
   border: 1px solid rgba(0, 0, 0, 0.808);
 }
 .minispace1 {
