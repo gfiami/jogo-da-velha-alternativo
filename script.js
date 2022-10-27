@@ -18,7 +18,7 @@ for (C = 1; C <= 9; C++) {
     ).innerHTML += `<div id='mini${C}${D}' class='minispace minispace${D}'> </div>`;
   }
 }
-//criação dos botões clicaveis de cada
+//criação dos botões clicaveis de cada div
 for (C = 1; C <= 9; C++) {
   for (D = 1; D <= 9; D++) {
     let minispace = document.querySelectorAll(`.space${C} .minispace${D}`);
@@ -35,13 +35,42 @@ function marcador(obj) {
   changeColor(lastPlayedId);
   let spacePlayedClass = obj.parentNode.parentNode.className;
   checkWin(spacePlayedClass);
+  checkWhatMinispace(objectId);
+}
+//checa qual minispace o jogador clicou para levá-lo até o space correspondente
+function checkWhatMinispace(idDoButton) {
+  let spaceRedirect = idDoButton[10]; //número que corresponde ao space que iremos
+  console.log(spaceRedirect);
+  for (C = 1; C <= 9; C++) {
+    for (D = 1; D <= 9; D++) {
+      let buttonText = document.querySelector(`#minispace${C}${D}`).innerText;
+      //Habilita botões no espaço correto de se jogar (se já tiver X ou O continua disabled)
+      if (C == spaceRedirect) {
+        if (buttonText == "") {
+          document.querySelector(`#minispace${C}${D}`).disabled = false;
+        } else {
+          document.querySelector(`#minispace${C}${D}`).disabled = true;
+        }
+      }
+      //Desabilita os botões nos espaços que não está ocorrendo a jogada
+      if (C != spaceRedirect) {
+        document.querySelector(`#minispace${C}${D}`).disabled = true;
+      }
+
+      //desabilitar botões e muda cor para preto
+    }
+  }
 }
 //muda de jogador
 function changePlayer() {
   if (playerAtual == p1) {
     playerAtual = p2;
+    document.querySelector(".vez-de-quem").innerHTML =
+      "Turno do Jogador 2<strong>(O)</strong>";
   } else {
     playerAtual = p1;
+    document.querySelector(".vez-de-quem").innerHTML =
+      "Turno do Jogador 1<strong>(X)</strong>";
   }
 }
 //deixa cor da última peça jogada vermelha
@@ -62,7 +91,7 @@ function changeColor(idOfSpace) {
 }
 let localJogado;
 
-//função para checar o símbolo jogado no espaço e usar na função checkWin
+//função para checar o símbolo jogado no espaço
 function enterMiniSpaceNumber(X) {
   let simbolo = document.querySelector(
     `#minispace${localJogado}${X}`
@@ -71,7 +100,7 @@ function enterMiniSpaceNumber(X) {
 }
 //função para checar após cada jogada se naquele espaço ocorreu vitória
 function checkWin(localJogadoClass) {
-  localJogado = localJogadoClass[5];
+  localJogado = localJogadoClass[5]; //pega último digito da class, que informa o espaço jogado de 1 a 9
 
   //LINHAS 1 = 2 = 3 // 4 = 5 = 6 // 7 = 8 = 9
   if (enterMiniSpaceNumber(1) !== "") {
