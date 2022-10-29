@@ -75,7 +75,7 @@ for (C = 1; C <= 9; C++) {
 }
 
 //ao clicar no miniespaço, marca com o símbolo do jogador e desabilita aquele miniespaço e invoca outras funções
-MS = 0;
+MS = 0; //contador para inclusão de cada minispaço clicado
 function marcador(obj) {
   let objectId = obj.id;
   document.querySelector(`#${objectId}`).innerHTML = playerAtual;
