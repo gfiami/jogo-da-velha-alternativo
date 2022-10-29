@@ -20,6 +20,18 @@ let spaceFull = {
   space8: 0,
   space9: 0,
 };
+
+let spaceFullTrueFalse = {
+  space1: false,
+  space2: false,
+  space3: false,
+  space4: false,
+  space5: false,
+  space6: false,
+  space7: false,
+  space8: false,
+  space9: false,
+};
 let spacePlayedClass;
 
 //simbolos dos jogadores
@@ -78,11 +90,12 @@ function marcador(obj) {
 function checkWhatMinispace(idDoButton) {
   let spaceRedirect = idDoButton[10]; //número que corresponde ao space que iremos
   let spaceCompleted = spaceHasWin[`space${spaceRedirect}`];
+  let spaceCompletedFull = spaceFullTrueFalse[`space${spaceRedirect}`];
   for (C = 1; C <= 9; C++) {
     for (D = 1; D <= 9; D++) {
       let buttonText = document.querySelector(`#minispace${C}${D}`).innerText;
       //se o espaço tiver 'vitoria', habilita TODOS os outros botões, exceto lá, se nao, habilita apenas do local para jogar
-      if (spaceCompleted == true) {
+      if (spaceCompleted == true || spaceCompletedFull == true) {
         document.querySelector(`#minispace${C}${D}`).disabled = false;
         document.querySelector(
           `#minispace${spaceRedirect}${D}`
@@ -260,6 +273,7 @@ function SpaceEnded(classOfSpace) {
 //função que coloca o space como finalizado devido a CHEIO
 function includeSpaceFull(classOfSpaceFull) {
   spaceIsFull[H] = classOfSpaceFull[5];
+  spaceFullTrueFalse[classOfSpaceFull] = true;
   H++;
   console.log(spaceIsFull);
 }
