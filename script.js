@@ -309,6 +309,7 @@ function changeBorderColor() {
   }
 }
 
+//add a simple text to make a space looks like an 'X' or 'O' depending on winner of space
 function changeToSpaceWinner(vencedorDoEspaço, numberSpace) {
   if (vencedorDoEspaço == "X") {
     finalWin[`s${numberSpace}`] = "X";
@@ -335,7 +336,7 @@ function changeToSpaceWinner(vencedorDoEspaço, numberSpace) {
     document.querySelector(`#minispace${numberSpace}${5}`).innerHTML = "";
   }
 }
-
+//checa se houve vitória no jogo "grande"
 function checkFinalWin() {
   //LINHAS 1 = 2 = 3 // 4 = 5 = 6 // 7 = 8 = 9
   if (finalWin.s1 !== "") {
@@ -390,6 +391,7 @@ function checkFinalWin() {
   }
 }
 let winner;
+//quando o jogo acaba, mostra mensagem e desabilita botões, scales e bordas para cinza
 function msgWin(winnerSymbol) {
   if (winnerSymbol == "X") {
     winner = "Jogador 1";
