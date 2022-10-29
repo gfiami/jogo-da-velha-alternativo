@@ -293,7 +293,7 @@ function changeBorderColor() {
       //se estiver habilitado fica verde
       if (document.querySelector(`#minispace${C}${D}`).disabled == false) {
         document.querySelector(`#mini${C}${D}`).style.borderColor = "purple";
-        document.querySelector(`.scaler${C}`).style.transform = "scale(1.35)";
+        document.querySelector(`.scaler${C}`).style.transform = "scale(1.5)";
 
         Y = C;
       }
