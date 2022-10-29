@@ -8,13 +8,10 @@ button {
   box-sizing: border-box;
   padding: 5px 5px;
   font-size: 1.34rem;
-  /*border: none; */
+  border: none;
   width: 35px;
   height: 35px;
   background-color: transparent;
-}
-button:disabled {
-  color: black;
 }
 .jogo-todo {
   width: 40%;
