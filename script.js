@@ -33,6 +33,17 @@ let spaceFullTrueFalse = {
   space9: false,
 };
 let spacePlayedClass;
+let finalWin = {
+  s1: "",
+  s2: "",
+  s3: "",
+  s4: "",
+  s5: "",
+  s6: "",
+  s7: "",
+  s8: "",
+  s9: "",
+};
 
 //simbolos dos jogadores
 const p1 = "X";
@@ -75,7 +86,6 @@ function marcador(obj) {
   let lastPlayedId = objectId;
   changePlayer();
   spacePlayedClass = obj.parentNode.parentNode.parentNode.className; //classe do espaço jogado
-  console.log(spacePlayedClass);
   spaceFull[spacePlayedClass]++; //espaço jogado ganha mais 1 ponto (com 9 vira 'cheio')
   if (spaceFull[spacePlayedClass] == 9) {
     includeSpaceFull(spacePlayedClass);
@@ -174,7 +184,6 @@ function checkWin(localJogadoClass) {
       enterMiniSpaceNumber(2) == enterMiniSpaceNumber(3)
     ) {
       SpaceEnded(localJogadoClass);
-      console.log("Linha 1 ganhou com símbolo " + enterMiniSpaceNumber(1));
       changeToSpaceWinner(simbolo, localJogado);
     }
   }
@@ -185,7 +194,6 @@ function checkWin(localJogadoClass) {
       enterMiniSpaceNumber(5) == enterMiniSpaceNumber(6)
     ) {
       SpaceEnded(localJogadoClass);
-      console.log("Linha 2 ganhou com símbolo " + enterMiniSpaceNumber(4));
       changeToSpaceWinner(simbolo, localJogado);
     }
   }
@@ -196,7 +204,6 @@ function checkWin(localJogadoClass) {
       enterMiniSpaceNumber(8) == enterMiniSpaceNumber(9)
     ) {
       SpaceEnded(localJogadoClass);
-      console.log("Linha 3 ganhou com símbolo " + enterMiniSpaceNumber(7));
       changeToSpaceWinner(simbolo, localJogado);
     }
   }
@@ -208,7 +215,6 @@ function checkWin(localJogadoClass) {
       enterMiniSpaceNumber(4) == enterMiniSpaceNumber(7)
     ) {
       SpaceEnded(localJogadoClass);
-      console.log("Coluna 1 ganhou com símbolo " + enterMiniSpaceNumber(1));
       changeToSpaceWinner(simbolo, localJogado);
     }
   }
@@ -219,7 +225,6 @@ function checkWin(localJogadoClass) {
       enterMiniSpaceNumber(5) == enterMiniSpaceNumber(8)
     ) {
       SpaceEnded(localJogadoClass);
-      console.log("Coluna 2 ganhou com símbolo " + enterMiniSpaceNumber(2));
       changeToSpaceWinner(simbolo, localJogado);
     }
   }
@@ -230,7 +235,6 @@ function checkWin(localJogadoClass) {
       enterMiniSpaceNumber(6) == enterMiniSpaceNumber(9)
     ) {
       SpaceEnded(localJogadoClass);
-      console.log("Coluna 3 ganhou com símbolo " + enterMiniSpaceNumber(3));
       changeToSpaceWinner(simbolo, localJogado);
     }
   }
@@ -242,7 +246,6 @@ function checkWin(localJogadoClass) {
       enterMiniSpaceNumber(5) == enterMiniSpaceNumber(9)
     ) {
       SpaceEnded(localJogadoClass);
-      console.log("Diagonal 1 ganhou com símbolo " + enterMiniSpaceNumber(1));
       changeToSpaceWinner(simbolo, localJogado);
     }
   }
@@ -253,7 +256,6 @@ function checkWin(localJogadoClass) {
       enterMiniSpaceNumber(5) == enterMiniSpaceNumber(7)
     ) {
       SpaceEnded(localJogadoClass);
-      console.log("Diagonal 2 ganhou com símbolo " + enterMiniSpaceNumber(3));
       changeToSpaceWinner(simbolo, localJogado);
     }
   }
@@ -275,7 +277,6 @@ function includeSpaceFull(classOfSpaceFull) {
   spaceIsFull[H] = classOfSpaceFull[5];
   spaceFullTrueFalse[classOfSpaceFull] = true;
   H++;
-  console.log(spaceIsFull);
 }
 
 let completedMinispaces = new Array(81);
@@ -291,8 +292,7 @@ function changeBorderColor() {
       }
       //se estiver habilitado fica verde
       if (document.querySelector(`#minispace${C}${D}`).disabled == false) {
-        document.querySelector(`#mini${C}${D}`).style.borderColor =
-          "rgba(38, 177, 3, 0.808)";
+        document.querySelector(`#mini${C}${D}`).style.borderColor = "purple";
         document.querySelector(`.scaler${C}`).style.transform = "scale(1.35)";
 
         Y = C;
@@ -303,17 +303,15 @@ function changeBorderColor() {
   for (E = 1; E <= 9; E++) {
     //se o miniespaço já tiver sido jogado mas agora o jogo será no espaço dele, muda a cor dele também
     if (completedMinispaces.includes(`${Y}${E}`)) {
-      document.querySelector(`#mini${Y}${E}`).style.borderColor =
-        "rgba(38, 177, 3, 0.808)";
+      document.querySelector(`#mini${Y}${E}`).style.borderColor = "purple";
       document.querySelector(`.scaler${Y}`).style.transform = "scale(1.35)";
     }
   }
 }
 
 function changeToSpaceWinner(vencedorDoEspaço, numberSpace) {
-  console.log(vencedorDoEspaço);
-  console.log(numberSpace);
   if (vencedorDoEspaço == "X") {
+    finalWin[`s${numberSpace}`] = "X";
     document.querySelector(`.space${numberSpace}`).style.backgroundColor =
       "yellow";
     for (C = 1; C <= 9; C++) {
@@ -326,6 +324,7 @@ function changeToSpaceWinner(vencedorDoEspaço, numberSpace) {
     }
   }
   if (vencedorDoEspaço == "O") {
+    finalWin[`s${numberSpace}`] = "O";
     document.querySelector(`.space${numberSpace}`).style.backgroundColor =
       "cyan";
     for (D = 1; D <= 9; D++) {
@@ -337,4 +336,75 @@ function changeToSpaceWinner(vencedorDoEspaço, numberSpace) {
   }
 }
 
-function checkFinalWin() {}
+function checkFinalWin() {
+  //LINHAS 1 = 2 = 3 // 4 = 5 = 6 // 7 = 8 = 9
+  if (finalWin.s1 !== "") {
+    //linha 1 = 2 = 3
+    if (finalWin.s1 == finalWin.s2 && finalWin.s2 == finalWin.s3) {
+      msgWin(finalWin.s1);
+    }
+  }
+  if (finalWin.s4 !== "") {
+    //linha 4 = 5 = 6
+    if (finalWin.s4 == finalWin.s5 && finalWin.s5 == finalWin.s6) {
+      msgWin(finalWin.s4);
+    }
+  }
+  if (finalWin.s7 !== "") {
+    //linha 7 = 8 = 9
+    if (finalWin.s7 == finalWin.s8 && finalWin.s8 == finalWin.s9) {
+      msgWin(finalWin.s7);
+    }
+  }
+  //COLUNAS: 1 = 4 = 7 // 2 = 5 = 8 // 3 = 6 = 9
+  if (finalWin.s1 !== "") {
+    //coluna 1 = 4 = 7
+    if (finalWin.s1 == finalWin.s4 && finalWin.s4 == finalWin.s7) {
+      msgWin(finalWin.s1);
+    }
+  }
+  if (finalWin.s2 !== "") {
+    //coluna 2 = 5 = 8
+    if (finalWin.s2 == finalWin.s5 && finalWin.s5 == finalWin.s8) {
+      msgWin(finalWin.s2);
+    }
+  }
+  if (finalWin.s3 !== "") {
+    //coluna 3 = 6 = 9
+    if (finalWin.s3 == finalWin.s6 && finalWin.s6 == finalWin.s9) {
+      msgWin(finalWin.s3);
+    }
+  }
+  // DIAGONAIS: 1 = 5 = 9 // 3 = 5 = 7
+  if (finalWin.s1 !== "") {
+    //diagonal 1 = 5 = 9
+    if (finalWin.s1 == finalWin.s5 && finalWin.s5 == finalWin.s9) {
+      msgWin(finalWin.s1);
+    }
+  }
+  if (finalWin.s3 !== "") {
+    //diagonal 3 = 5 = 7
+    if (finalWin.s3 == finalWin.s5 && finalWin.s5 == finalWin.s7) {
+      msgWin(finalWin.s3);
+    }
+  }
+}
+let winner;
+function msgWin(winnerSymbol) {
+  if (winnerSymbol == "X") {
+    winner = "Jogador 1";
+  }
+  if (winnerSymbol == "O") {
+    winner = "Jogador 2";
+  }
+  document.querySelector(
+    "#messageWinner"
+  ).innerHTML = `O vencedor foi o ${winner}(${winnerSymbol})`;
+  for (C = 1; C <= 9; C++) {
+    for (D = 1; D <= 9; D++) {
+      document.querySelector(`#minispace${C}${D}`).disabled = true;
+      document.querySelector(`#mini${C}${D}`).style.borderColor = "gray";
+      document.querySelector(`.scaler${C}`).style.transform = "scale(1)";
+    }
+  }
+}
