@@ -66,6 +66,17 @@ button {
   margin: 1px;
   text-align: center;
   border: 4px solid rgba(0, 0, 0, 0.8);
+}
+.scaler1,
+.scaler2,
+.scaler3,
+.scaler4,
+.scaler5,
+.scaler6,
+.scaler7,
+.scaler8,
+.scaler9 {
+  display: grid;
   grid-template-areas:
     "minispace1 minispace2 minispace3"
     "minispace4 minispace5 minispace6"

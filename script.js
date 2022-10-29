@@ -35,9 +35,12 @@ let divset = document.querySelector(".jogo-todo");
 let spacePlayedClass;
 for (C = 1; C <= 9; C++) {
   divset.innerHTML += `<div class='space${C}'></div>`;
+  document.querySelector(
+    `.space${C}`
+  ).innerHTML += `<span class='scaler${C}'> </span>`;
   for (D = 1; D <= 9; D++) {
     document.querySelector(
-      `.space${C}`
+      `.scaler${C}`
     ).innerHTML += `<div id='mini${C}${D}' class='minispace minispace${D}'> </div>`;
   }
 }
@@ -62,7 +65,8 @@ function marcador(obj) {
   let lastPlayedId = objectId;
   changePlayer();
   changeColor(lastPlayedId);
-  spacePlayedClass = obj.parentNode.parentNode.className; //classe do espaço jogado
+  spacePlayedClass = obj.parentNode.parentNode.parentNode.className; //classe do espaço jogado
+  console.log(spacePlayedClass);
   spaceFull[spacePlayedClass]++; //espaço jogado ganha mais 1 ponto (com 9 vira 'cheio')
   if (spaceFull[spacePlayedClass] == 9) {
     includeSpaceFull(spacePlayedClass);
@@ -262,22 +266,26 @@ function changeBorderColor() {
     for (D = 1; D <= 9; D++) {
       //se estiver desabilitado fica cinza
       if (document.querySelector(`#minispace${C}${D}`).disabled == true) {
+        document.querySelector(`.scaler${C}`).style.transform = "scale(1)";
         document.querySelector(`#mini${C}${D}`).style.borderColor = "gray";
       }
       //se estiver habilitado fica verde
       if (document.querySelector(`#minispace${C}${D}`).disabled == false) {
         document.querySelector(`#mini${C}${D}`).style.borderColor =
           "rgba(38, 177, 3, 0.808)";
+        document.querySelector(`.scaler${C}`).style.transform = "scale(1.35)";
+
         Y = C;
       }
       //completedMinispaces.includes(`${C}${D}`) lógica para se incluir o espaço e estiver disabilitado
     }
   }
   for (E = 1; E <= 9; E++) {
-    console.log(Y);
+    //se o miniespaço já tiver sido jogado mas agora o jogo será no espaço dele, muda a cor dele também
     if (completedMinispaces.includes(`${Y}${E}`)) {
       document.querySelector(`#mini${Y}${E}`).style.borderColor =
         "rgba(38, 177, 3, 0.808)";
+      document.querySelector(`.scaler${Y}`).style.transform = "scale(1.35)";
     }
   }
 }
