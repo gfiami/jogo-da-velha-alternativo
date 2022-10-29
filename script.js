@@ -20,6 +20,7 @@ let spaceFull = {
   space8: 0,
   space9: 0,
 };
+let spacePlayedClass;
 
 //simbolos dos jogadores
 const p1 = "X";
@@ -28,20 +29,17 @@ const p2 = "O";
 //jogador 1 começa (depois a função changePlayer irá mudar de jogador)
 let playerAtual = p1;
 
-//seleciona a div que contém o jogo inteiro
-let divset = document.querySelector(".jogo-todo");
-
 //criação de cada espaço do jogo e miniespaço do jogo
-let spacePlayedClass;
+let divset = document.querySelector(".jogo-todo");
 for (C = 1; C <= 9; C++) {
-  divset.innerHTML += `<div class='space${C}'></div>`;
+  divset.innerHTML += `<div  class='space${C}'></div>`;
   document.querySelector(
     `.space${C}`
-  ).innerHTML += `<span class='scaler${C}'> </span>`;
+  ).innerHTML += `<span  class='scaler${C}'> </span>`;
   for (D = 1; D <= 9; D++) {
     document.querySelector(
       `.scaler${C}`
-    ).innerHTML += `<div id='mini${C}${D}' class='minispace minispace${D}'> </div>`;
+    ).innerHTML += `<div  id='mini${C}${D}' class='minispace minispace${D}'> </div>`;
   }
 }
 
@@ -49,7 +47,7 @@ for (C = 1; C <= 9; C++) {
 for (C = 1; C <= 9; C++) {
   for (D = 1; D <= 9; D++) {
     let minispace = document.querySelectorAll(`.space${C} .minispace${D}`);
-    minispace[0].innerHTML = `<button type='button' id='minispace${C}${D}'onclick='marcador(this)'></button>`;
+    minispace[0].innerHTML = `<button  type='button' class='buttonMini' id='minispace${C}${D}'onclick='marcador(this)'></button>`;
   }
 }
 
@@ -64,7 +62,6 @@ function marcador(obj) {
   MS++;
   let lastPlayedId = objectId;
   changePlayer();
-  changeColor(lastPlayedId);
   spacePlayedClass = obj.parentNode.parentNode.parentNode.className; //classe do espaço jogado
   console.log(spacePlayedClass);
   spaceFull[spacePlayedClass]++; //espaço jogado ganha mais 1 ponto (com 9 vira 'cheio')
@@ -74,6 +71,8 @@ function marcador(obj) {
   checkWin(spacePlayedClass);
   checkWhatMinispace(objectId);
   changeBorderColor();
+  changeColor(lastPlayedId);
+  checkFinalWin();
 }
 //checa qual minispace o jogador clicou para levá-lo até o space correspondente
 function checkWhatMinispace(idDoButton) {
@@ -142,11 +141,10 @@ function changeColor(idOfSpace) {
 }
 
 let localJogado;
+let simbolo;
 //função para checar o símbolo jogado no espaço
 function enterMiniSpaceNumber(X) {
-  let simbolo = document.querySelector(
-    `#minispace${localJogado}${X}`
-  ).innerText;
+  simbolo = document.querySelector(`#minispace${localJogado}${X}`).innerText;
 
   return simbolo;
 }
@@ -164,6 +162,7 @@ function checkWin(localJogadoClass) {
     ) {
       SpaceEnded(localJogadoClass);
       console.log("Linha 1 ganhou com símbolo " + enterMiniSpaceNumber(1));
+      changeToSpaceWinner(simbolo, localJogado);
     }
   }
   if (enterMiniSpaceNumber(4) !== "") {
@@ -174,6 +173,7 @@ function checkWin(localJogadoClass) {
     ) {
       SpaceEnded(localJogadoClass);
       console.log("Linha 2 ganhou com símbolo " + enterMiniSpaceNumber(4));
+      changeToSpaceWinner(simbolo, localJogado);
     }
   }
   if (enterMiniSpaceNumber(7) !== "") {
@@ -184,6 +184,7 @@ function checkWin(localJogadoClass) {
     ) {
       SpaceEnded(localJogadoClass);
       console.log("Linha 3 ganhou com símbolo " + enterMiniSpaceNumber(7));
+      changeToSpaceWinner(simbolo, localJogado);
     }
   }
   //COLUNAS: 1 = 4 = 7 // 2 = 5 = 8 // 3 = 6 = 9
@@ -195,6 +196,7 @@ function checkWin(localJogadoClass) {
     ) {
       SpaceEnded(localJogadoClass);
       console.log("Coluna 1 ganhou com símbolo " + enterMiniSpaceNumber(1));
+      changeToSpaceWinner(simbolo, localJogado);
     }
   }
   if (enterMiniSpaceNumber(2) !== "") {
@@ -205,6 +207,7 @@ function checkWin(localJogadoClass) {
     ) {
       SpaceEnded(localJogadoClass);
       console.log("Coluna 2 ganhou com símbolo " + enterMiniSpaceNumber(2));
+      changeToSpaceWinner(simbolo, localJogado);
     }
   }
   if (enterMiniSpaceNumber(3) !== "") {
@@ -215,6 +218,7 @@ function checkWin(localJogadoClass) {
     ) {
       SpaceEnded(localJogadoClass);
       console.log("Coluna 3 ganhou com símbolo " + enterMiniSpaceNumber(3));
+      changeToSpaceWinner(simbolo, localJogado);
     }
   }
   // DIAGONAIS: 1 = 5 = 9 // 3 = 5 = 7
@@ -226,6 +230,7 @@ function checkWin(localJogadoClass) {
     ) {
       SpaceEnded(localJogadoClass);
       console.log("Diagonal 1 ganhou com símbolo " + enterMiniSpaceNumber(1));
+      changeToSpaceWinner(simbolo, localJogado);
     }
   }
   if (enterMiniSpaceNumber(3) !== "") {
@@ -236,6 +241,7 @@ function checkWin(localJogadoClass) {
     ) {
       SpaceEnded(localJogadoClass);
       console.log("Diagonal 2 ganhou com símbolo " + enterMiniSpaceNumber(3));
+      changeToSpaceWinner(simbolo, localJogado);
     }
   }
 }
@@ -289,3 +295,32 @@ function changeBorderColor() {
     }
   }
 }
+
+function changeToSpaceWinner(vencedorDoEspaço, numberSpace) {
+  console.log(vencedorDoEspaço);
+  console.log(numberSpace);
+  if (vencedorDoEspaço == "X") {
+    document.querySelector(`.space${numberSpace}`).style.backgroundColor =
+      "yellow";
+    for (C = 1; C <= 9; C++) {
+      document.querySelector(`#minispace${numberSpace}${C}`).innerHTML = "";
+    }
+    for (E = 1; E <= 9; E = E + 2) {
+      document.querySelector(`#minispace${numberSpace}${E}`).innerHTML = "X";
+      document.querySelector(`#minispace${numberSpace}${E}`).style.color =
+        "black";
+    }
+  }
+  if (vencedorDoEspaço == "O") {
+    document.querySelector(`.space${numberSpace}`).style.backgroundColor =
+      "cyan";
+    for (D = 1; D <= 9; D++) {
+      document.querySelector(`#minispace${numberSpace}${D}`).innerHTML = "O";
+      document.querySelector(`#minispace${numberSpace}${D}`).style.color =
+        "black";
+    }
+    document.querySelector(`#minispace${numberSpace}${5}`).innerHTML = "";
+  }
+}
+
+function checkFinalWin() {}
